@@ -1,7 +1,8 @@
 from __future__ import annotations
 
+from collections.abc import Iterable
 from dataclasses import dataclass, field
-from typing import Iterable, Literal
+from typing import ClassVar, Literal
 
 
 Severity = Literal["info", "warning", "error"]
@@ -73,7 +74,7 @@ class DecisionCompiler:
     contract that an LLM, analyst, notebook, API, or human can use upstream.
     """
 
-    weights = {
+    weights: ClassVar[dict[str, float]] = {
         "evidence": 0.30,
         "assumptions": 0.20,
         "alternatives": 0.20,
