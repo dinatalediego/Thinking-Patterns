@@ -1,0 +1,46 @@
+{
+  "decision_id": "pricing-m1-2026-09",
+  "question": "¿Aumentar 3% el precio de la tipología M1?",
+  "options": [
+    {
+      "id": "hold",
+      "title": "Mantener precio",
+      "rationale": "Preservar absorción",
+      "evidence_ids": ["absorption"]
+    },
+    {
+      "id": "raise",
+      "title": "Aumentar 3%",
+      "rationale": "Capturar disposición a pagar observada",
+      "evidence_ids": ["absorption", "market_gap"]
+    }
+  ],
+  "selected_option_id": "raise",
+  "evidence": [
+    {
+      "id": "absorption",
+      "claim": "Absorción 90d por encima de meta",
+      "source": "medallio_dw",
+      "quality": 0.95
+    },
+    {
+      "id": "market_gap",
+      "claim": "Precio m² por debajo de comparables",
+      "source": "mercado_longitudinal",
+      "quality": 0.85
+    }
+  ],
+  "assumptions": [
+    {
+      "id": "elasticity",
+      "statement": "El aumento no deteriorará fuertemente la conversión",
+      "falsifier": "Conversión cae más de 15% vs baseline",
+      "consequence_if_false": "Rollback de precio"
+    }
+  ],
+  "expected_outcome": "Mayor ingreso sin deterioro material de conversión",
+  "success_metric": "Ingreso incremental y conversión a 30 días",
+  "review_by": "2026-10-11",
+  "reversibility": "high",
+  "rollback_trigger": ""
+}
