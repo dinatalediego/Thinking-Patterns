@@ -4,7 +4,6 @@ from collections.abc import Iterable
 from dataclasses import dataclass, field
 from typing import ClassVar, Literal
 
-
 Severity = Literal["info", "warning", "error"]
 Verdict = Literal["ready", "conditional", "not_ready"]
 
