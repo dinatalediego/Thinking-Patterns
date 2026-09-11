@@ -19,7 +19,7 @@ def _tuple_of_strings(value: Any) -> tuple[str, ...]:
     if value is None:
         return ()
     if not isinstance(value, list):
-        raise ValueError("evidence_ids debe ser una lista")
+        raise TypeError("evidence_ids debe ser una lista")
     return tuple(str(item) for item in value)
 
 
@@ -83,7 +83,7 @@ def decision_case_from_dict(payload: dict[str, Any]) -> DecisionCase:
 def compile_file(path: Path) -> dict[str, Any]:
     payload = json.loads(path.read_text(encoding="utf-8"))
     if not isinstance(payload, dict):
-        raise ValueError("La raíz del archivo debe ser un objeto JSON")
+        raise TypeError("La raíz del archivo debe ser un objeto JSON")
 
     case = decision_case_from_dict(payload)
     return asdict(compile_decision(case))
@@ -116,7 +116,7 @@ def main(argv: list[str] | None = None) -> int:
 
     try:
         result = compile_file(args.file)
-    except (OSError, json.JSONDecodeError, ValueError) as exc:
+    except (OSError, json.JSONDecodeError, TypeError, ValueError) as exc:
         print(
             json.dumps(
                 {"ok": False, "error": str(exc)},
