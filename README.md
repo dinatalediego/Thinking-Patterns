@@ -60,3 +60,41 @@ python src/thinking_patterns/examples/logging_narrativa.py
 ---
 
 **Licencia:** MIT
+
+
+## 🧭 Decision Compiler v0.2
+
+Thinking Patterns ahora también puede funcionar como una capa determinística de **Decision Intelligence**.
+
+`DecisionCompiler` recibe una decisión estructurada y la compila en un paquete auditable con:
+
+- evidencia explícita y calidad de fuente;
+- supuestos con falsificadores;
+- alternativas comparables y opción seleccionada;
+- resultado esperado, métrica y fecha de revisión;
+- reversibilidad y trigger de rollback;
+- `readiness_score`, veredicto y hallazgos adversariales.
+
+Ejemplo:
+
+```python
+from thinking_patterns.core.decision_compiler import (
+    DecisionCase, Evidence, Option, compile_decision
+)
+
+case = DecisionCase(
+    decision_id="demo",
+    question="¿Cambiar la política?",
+    options=(
+        Option(id="hold", title="Mantener"),
+        Option(id="change", title="Cambiar", evidence_ids=("e1",)),
+    ),
+    selected_option_id="change",
+    evidence=(Evidence("e1", "La métrica supera el umbral", "DW", 0.9),),
+)
+
+result = compile_decision(case)
+print(result.verdict, result.readiness_score)
+```
+
+Prueba completa: `python src/thinking_patterns/examples/decision_compiler_demo.py`.
