@@ -98,3 +98,32 @@ print(result.verdict, result.readiness_score)
 ```
 
 Prueba completa: `python src/thinking_patterns/examples/decision_compiler_demo.py`.
+
+
+## 🚦 Decision Quality SDK v0.3
+
+La capa de Decision Intelligence también puede ejecutarse fuera de Python como un **quality gate de CI**.
+
+```bash
+pip install -e .
+decision-compile examples/decisions/pricing_raise.json --require-ready
+```
+
+El comando:
+
+- lee un `DecisionCase` JSON versionable;
+- ejecuta la revisión adversarial determinística;
+- imprime `readiness_score`, dimensiones y findings como JSON;
+- devuelve exit code `2` cuando `--require-ready` y la decisión no está lista;
+- puede bloquear un deploy, promoción de modelo o cambio de política antes de producción.
+
+Contrato portable: `schema/decision-case.schema.json`.
+
+### Ejemplo en GitHub Actions
+
+```yaml
+- name: Gate decision quality
+  run: decision-compile decisions/pricing.json --require-ready --compact
+```
+
+Esto permite que una decisión comercial o analítica tenga el mismo tratamiento que código: **versionada, testeable, revisable y con condiciones explícitas para actuar**.
