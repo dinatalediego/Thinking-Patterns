@@ -4,7 +4,7 @@ build-backend = "setuptools.build_meta"
 
 [project]
 name = "thinking-patterns"
-version = "0.2.0"
+version = "0.3.0"
 description = "Metapatrones y Decision Intelligence determinística para pensamiento auditable"
 authors = [{name="Diego Di Natale"}]
 readme = "README.md"
@@ -13,3 +13,7 @@ dependencies = []
 
 [project.urls]
 Homepage = "https://github.com/dinatalediego/Thinking-Patterns"
+
+
+[project.scripts]
+decision-compile = "thinking_patterns.cli:main"
