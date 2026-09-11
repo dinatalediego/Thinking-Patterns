@@ -60,3 +60,70 @@ python src/thinking_patterns/examples/logging_narrativa.py
 ---
 
 **Licencia:** MIT
+
+
+## 🧭 Decision Compiler v0.2
+
+Thinking Patterns ahora también puede funcionar como una capa determinística de **Decision Intelligence**.
+
+`DecisionCompiler` recibe una decisión estructurada y la compila en un paquete auditable con:
+
+- evidencia explícita y calidad de fuente;
+- supuestos con falsificadores;
+- alternativas comparables y opción seleccionada;
+- resultado esperado, métrica y fecha de revisión;
+- reversibilidad y trigger de rollback;
+- `readiness_score`, veredicto y hallazgos adversariales.
+
+Ejemplo:
+
+```python
+from thinking_patterns.core.decision_compiler import (
+    DecisionCase, Evidence, Option, compile_decision
+)
+
+case = DecisionCase(
+    decision_id="demo",
+    question="¿Cambiar la política?",
+    options=(
+        Option(id="hold", title="Mantener"),
+        Option(id="change", title="Cambiar", evidence_ids=("e1",)),
+    ),
+    selected_option_id="change",
+    evidence=(Evidence("e1", "La métrica supera el umbral", "DW", 0.9),),
+)
+
+result = compile_decision(case)
+print(result.verdict, result.readiness_score)
+```
+
+Prueba completa: `python src/thinking_patterns/examples/decision_compiler_demo.py`.
+
+
+## 🚦 Decision Quality SDK v0.3
+
+La capa de Decision Intelligence también puede ejecutarse fuera de Python como un **quality gate de CI**.
+
+```bash
+pip install -e .
+decision-compile examples/decisions/pricing_raise.json --require-ready
+```
+
+El comando:
+
+- lee un `DecisionCase` JSON versionable;
+- ejecuta la revisión adversarial determinística;
+- imprime `readiness_score`, dimensiones y findings como JSON;
+- devuelve exit code `2` cuando `--require-ready` y la decisión no está lista;
+- puede bloquear un deploy, promoción de modelo o cambio de política antes de producción.
+
+Contrato portable: `schema/decision-case.schema.json`.
+
+### Ejemplo en GitHub Actions
+
+```yaml
+- name: Gate decision quality
+  run: decision-compile decisions/pricing.json --require-ready --compact
+```
+
+Esto permite que una decisión comercial o analítica tenga el mismo tratamiento que código: **versionada, testeable, revisable y con condiciones explícitas para actuar**.

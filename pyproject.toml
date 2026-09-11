@@ -4,12 +4,16 @@ build-backend = "setuptools.build_meta"
 
 [project]
 name = "thinking-patterns"
-version = "0.1.0"
-description = "Metapatrones: OOP para diseño de pensamiento"
-authors = [{name="Tu Nombre", email="tu.email@example.com"}]
+version = "0.3.0"
+description = "Metapatrones y Decision Intelligence determinística para pensamiento auditable"
+authors = [{name="Diego Di Natale"}]
 readme = "README.md"
 requires-python = ">=3.10"
 dependencies = []
 
 [project.urls]
-Homepage = "https://github.com/tuusuario/thinking-patterns"
+Homepage = "https://github.com/dinatalediego/Thinking-Patterns"
+
+
+[project.scripts]
+decision-compile = "thinking_patterns.cli:main"
